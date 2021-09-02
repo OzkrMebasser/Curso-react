@@ -1,0 +1,35 @@
+header {
+  transition: all 0.3s ease;
+}
+
+.normal-header {
+  padding: 10px 20px;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dark-header {
+  padding: 10px 20px;
+  background-color: #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dark-header a {
+  color: #fff;
+}
+
+ul {
+  width: 30%;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h2.header__title {
+  text-align: center;
+}
