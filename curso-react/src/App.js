@@ -1,34 +1,53 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+//Styles
+import "./App.css";
 
 //COMPONENTS
-import Header from "./components/Header";
-import Section from "./components/Section";
-//Estado
+import SingleCharacter from "./components/SingleCharacter";
 
 const App = () => {
-  const [text, setText] = useState("Sin DarkMode");
-  const [pageInfo, setPageInfo] = useState([
-    {
-      title: "Título 1",
-      section: "Texto de prueba 1"
-    },
-    {
-      title: "Título 2",
-      section: "Texto de prueba 2"
-    },
-    {
-      title: "Título 3",
-      section: "Texto de prueba 3"
+  //Estado del componente
+  const [characters, setCharacters] = useState([]);
+  const [page, setPage] = useState(1);
+
+  //Consultamos la API
+  const handleFetchAPI = async () => {
+    try {
+      const response = await fetch(
+        `https://rickandmortyapi.com/api/character/?page=${page}`
+      );
+      // const result = await response.json();
+      const { results, info } = await response.json();
+      //Guardamos results en estado
+      setCharacters(results);
+      setCharacters([...characters, ...results]);
+    } catch (error) {
+      console.log(error);
     }
-  ]);
+  };
+
+  const handleNewPage = () => {
+    setPage(page + 1);
+  };
+
+  useEffect(() => {
+    handleFetchAPI();
+  }, [page]);
 
   return (
     <div className="App">
-      <Header titulo="Logo 1" numero="1" classCss="header1" setText={setText} />
-      <h2 className="header__title">{text}</h2>
-      {pageInfo.map((section, index) => (
-        <Section title={section.title} section={section.section} key={index} />
-      ))}
+      <section className="characters-container">
+        {characters.map(character => (
+          <SingleCharacter
+            name={character.name}
+            avatar={character.image}
+            key={character.id}
+          />
+        ))}
+        <button className="more-btn" onClick={handleNewPage}>
+          Ver más
+        </button>
+      </section>
     </div>
   );
 };
