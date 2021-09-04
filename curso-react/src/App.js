@@ -1,34 +1,37 @@
 import React, { useState } from "react";
 
 //COMPONENTS
-import Header from "./components/Header";
-import Section from "./components/Section";
+import Form from "./components/Form";
+
 //Estado
 
 const App = () => {
-  const [text, setText] = useState("Sin DarkMode");
-  const [pageInfo, setPageInfo] = useState([
-    {
-      title: "Título 1",
-      section: "Texto de prueba 1"
-    },
-    {
-      title: "Título 2",
-      section: "Texto de prueba 2"
-    },
-    {
-      title: "Título 3",
-      section: "Texto de prueba 3"
-    }
-  ]);
+  //State
+  const [category, setCategory] = useState("business");
+  const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  //Llamar al API
+  const handleSearch = async () => {
+    setLoading(true);
+    const APIKey = "e162d6ec37984d44ba84b505703b6861";
+    const API = `https://newsapi.org/v2/top-headlines?category=${category}&apiKey=${APIKey}`;
+
+    const response = await fetch(API);
+    const { articles } = await response.json();
+    setNews(articles);
+    console.log(articles);
+    setLoading(false);
+  };
+  console.log("App --->", category);
 
   return (
     <div className="App">
-      <Header titulo="Logo 1" numero="1" classCss="header1" setText={setText} />
-      <h2 className="header__title">{text}</h2>
-      {pageInfo.map((section, index) => (
-        <Section title={section.title} section={section.section} key={index} />
-      ))}
+      <Form
+        setCategory={setCategory}
+        handleSearch={handleSearch}
+        loading={loading}
+      />
     </div>
   );
 };

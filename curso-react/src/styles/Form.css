@@ -1,0 +1,38 @@
+.input-news {
+  width: 50%;
+  margin: auto;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-news select {
+  margin-top: 10px;
+  border: 3px solid #b5eaea;
+  padding: 10px;
+  outline: none;
+}
+
+.search-button,
+.searching-button {
+  width: 50%;
+  margin: 20px auto;
+  transition: all 0.3s ease;
+}
+
+.search-button button {
+  width: 100%;
+  background-color: #b5eaea;
+  border: 1px solid #b5eaea;
+  padding: 15px;
+  transition: all 0.3s ease;
+}
+
+.searching-button button {
+  width: 100%;
+  background-color: #ffbcbc;
+  border: 1px solid #ffbcbc;
+  padding: 15px;
+  color: #fff;
+  transition: all 0.3s ease;
+}
