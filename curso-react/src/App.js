@@ -1,15 +1,35 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-//COMPONENTS
-import Header from "./components/Header";
+//VIEWS
+import Home from "./components/Home";
+import Contact from "./views/Contact";
+
+////Styles
+import "./styles/styles.css";
+import "./styles/grid.css";
+import "./styles/reset.css";
 
 const App = () => {
+  // return (
+  //   <div className="App">
+  //     <Header />
+  //     <AboutSection />
+  //     <ContactSection />
+  //   </div>
+  // );
+
   return (
-    <div className="App">
-      <Header titulo="Logo 1" numero="1" classCss="header1" />
-      <Header titulo="Logo 2" numero="2" classCss="header2" />
-      <Header titulo="Logo 3" numero="3" classCss="header3" />
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/" exact>
+          <Home />
+        </Route>
+        <Route path="/contact">
+          <Contact />
+        </Route>
+      </Switch>
+    </Router>
   );
 };
 
