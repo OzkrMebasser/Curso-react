@@ -1,14 +1,9 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 //VIEWS
-import Home from "./components/Home";
-import Contact from "./views/Contact";
-
-////Styles
-import "./styles/styles.css";
-import "./styles/grid.css";
-import "./styles/reset.css";
+import CountryPage from "./views/CountryPage";
+import CountryDetails from "./views/CountryDetails";
 
 const App = () => {
   // return (
@@ -20,16 +15,19 @@ const App = () => {
   // );
 
   return (
-    <Router>
+    <BrowserRouter>
       <Switch>
         <Route path="/" exact>
-          <Home />
+          <CountryPage />
         </Route>
-        <Route path="/contact">
-          <Contact />
+        <Route path="/details/:country" exact>
+          <CountryDetails />
         </Route>
+        {/* <Route path="/list" exact>
+          <CountryPage />
+        </Route> */}
       </Switch>
-    </Router>
+    </BrowserRouter>
   );
 };
 
