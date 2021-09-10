@@ -1,0 +1,29 @@
+.hero-card {
+  width: 35%;
+  margin: auto;
+  margin-top: 100px;
+  text-align: center;
+}
+
+.hero-card img {
+  max-width: 100%;
+}
+
+.hero-card .hero-card__actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hero-card .hero-card__actions button {
+  background-color: #b61919;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  padding: 10px 20px;
+}
+
+.hero-card .hero-card__actions button a {
+  text-decoration: none;
+  color: #fff;
+}

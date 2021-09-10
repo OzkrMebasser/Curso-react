@@ -1,13 +1,19 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 //Styles
-import "../../styles/Home/Hero.css";
+import "../../styles/Home/Hero.styles.css";
 
-const Hero = () => {
+const Hero = ({ name, avatar, id }) => {
   return (
-    <div className="main-section">
-      <h2>Esta es la página principal</h2>
-      <button>Saber más</button>
+    <div className="hero-card">
+      <img src={avatar} alt={name} />
+      <div className="hero-card__actions">
+        <h2>{name}</h2>
+        <button>
+          <Link to={`/hero/${id}`}>Ver más</Link>
+        </button>
+      </div>
     </div>
   );
 };
