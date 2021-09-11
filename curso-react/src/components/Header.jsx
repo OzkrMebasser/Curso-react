@@ -1,14 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
-//Styles
-import "../styles/Header.styles.css";
+import { Navbar, Container } from "react-bootstrap";
 
 const Header = props => {
   return (
-    <header>
-      <Link to="/">HeroAPI</Link>
-    </header>
+    <Navbar bg="dark">
+      <Container>
+        <Navbar.Brand href="#home" style={{ color: "#fff" }}>
+          CoinCap API
+        </Navbar.Brand>
+      </Container>
+    </Navbar>
   );
 };
 

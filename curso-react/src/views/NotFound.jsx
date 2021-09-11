@@ -1,18 +1,12 @@
 import React from "react";
 
+//Bootstrap components
+import { Alert } from "react-bootstrap";
+
 const NotFound = props => {
   return (
-    <div
-      style={{
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column"
-      }}
-    >
-      <h2 style={{ fontSize: "7rem", color: "#CD113B" }}>404</h2>
-      <p>Not Found</p>
+    <div>
+      <Alert variant="danger">404 not found</Alert>
     </div>
   );
 };

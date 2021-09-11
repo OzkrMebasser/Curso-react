@@ -1,59 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-//Components
 import Header from "../components/Header";
-import SearchHero from "../components/Home/SearchHero";
-import ShowError from "../components/ShowError";
-import Hero from "../components/Home/Hero";
+import CoincapTable from "../components/Home/CoincapTable";
+import Loader from "../components/Loader";
+import { setTimeout } from "timers";
 
 const Home = () => {
-  const [heroName, setHeroName] = useState(null);
-  const [heroData, setHeroData] = useState(null);
-  const [error, setError] = useState(false);
-  const [message, setMessage] = useState(null);
+  //State
+  const [data, setData] = useState([]);
+  const [loader, setLoader] = useState(true);
 
-  const handleSearchHero = async e => {
-    const accesToken = "10220588968268520";
-    const url = `https://www.superheroapi.com/api.php/${accesToken}/search/${heroName}`;
-    e.preventDefault();
-
+  //API
+  const fetchData = async () => {
+    setLoader(true);
     try {
-      const response = await fetch(url);
-      const result = await response.json();
-
-      if (result.response === "error") {
-        setError(true);
-        setMessage(result.error);
-      } else {
-        setError(false);
-        setHeroData(result.results[0]);
-      }
-      console.log(result);
+      const API = "https://api.coincap.io/v2/assets?limit=15";
+      const response = await fetch(API);
+      const { data } = await response.json();
+      console.log(data);
+      setData(data);
+      setTimeout(() => {
+        setLoader(false);
+      }, 2000);
     } catch (error) {
+      setLoader(false);
       console.log(error);
     }
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
       <Header />
-      <SearchHero
-        setHeroName={setHeroName}
-        handleSearchHero={handleSearchHero}
-      />
-
-      {//Si la variable error es true
-      error ? (
-        <ShowError message={message} />
-      ) : (
-        heroData && (
-          <Hero
-            name={heroData.name}
-            avatar={heroData.image.url}
-            id={heroData.id}
-          />
-        )
-      )}
+      {loader ? <Loader /> : <CoincapTable data={data} />}
     </>
   );
 };

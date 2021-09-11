@@ -1,26 +1,29 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-//Vistas o páginas
+//Router
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+
+//Views
 import Home from "./views/Home";
-import SingleHero from "./views/SingleHero";
+import CoinDetails from "./views/CoinDetails";
 import NotFound from "./views/NotFound";
 
 const App = () => {
   return (
-    <Router>
+    <BrowserRouter>
       <Switch>
         <Route path="/" exact>
           <Home />
         </Route>
-        <Route path="/hero/:id" exact>
-          <SingleHero />
+        <Route path="/details/:id" exact>
+          <CoinDetails />
         </Route>
         <Route path="*">
           <NotFound />
         </Route>
       </Switch>
-    </Router>
+    </BrowserRouter>
   );
 };
 
