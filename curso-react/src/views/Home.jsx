@@ -8,11 +8,12 @@ import { setTimeout } from "timers";
 const Home = () => {
   //State
   const [data, setData] = useState([]);
-  const [loader, setLoader] = useState(true);
+  const [loader, setLoader] = useState(false);
 
   //API
   const fetchData = async () => {
     setLoader(true);
+
     try {
       const API = "https://api.coincap.io/v2/assets?limit=15";
       const response = await fetch(API);
@@ -30,10 +31,15 @@ const Home = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [x, y]);
 
   return (
     <>
+      <select name="" id="">
+        {variable.map(option => (
+          <option>{option - value}</option>
+        ))}
+      </select>
       <Header />
       {loader ? <Loader /> : <CoincapTable data={data} />}
     </>
