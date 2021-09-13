@@ -1,0 +1,43 @@
+@import "./colors";
+@import "./responsive";
+
+@mixin colorFont($color, $size) {
+  color: $color;
+  font-size: $size;
+}
+
+.App {
+  height: 100vh;
+  background-color: $main_blue;
+
+  h1 {
+    @include colorFont($black, 25px);
+  }
+
+  p {
+    font-size: 40px;
+    @include colorFont($black, 13px);
+    &:hover {
+      background-color: red;
+    }
+  }
+
+  .container {
+    background-color: $main_yellow;
+    h4 {
+      @include colorFont($black, 20px);
+    }
+  }
+
+  @include media(lg) {
+    background-color: $light_yellow;
+  }
+
+  @include media(md) {
+    background-color: $light_blue;
+  }
+
+  @include media(sm) {
+    background-color: $main_yellow;
+  }
+}

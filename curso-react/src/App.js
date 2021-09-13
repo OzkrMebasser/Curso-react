@@ -1,29 +1,18 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-//Router
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-
-//Views
-import Home from "./views/Home";
-import CoinDetails from "./views/CoinDetails";
-import NotFound from "./views/NotFound";
+//Styles
+import "./styles/main.scss";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/" exact>
-          <Home />
-        </Route>
-        <Route path="/details/:id" exact>
-          <CoinDetails />
-        </Route>
-        <Route path="*">
-          <NotFound />
-        </Route>
-      </Switch>
-    </BrowserRouter>
+    <div className="App">
+      <h1>Título</h1>
+      <p>Párrafo estilizado con sass</p>
+      <div className="container">
+        <h4>H4 dentro de otro div</h4>
+      </div>
+    </div>
   );
 };
 

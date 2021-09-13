@@ -1,0 +1,22 @@
+//Breakpoints
+$lg-breakpoint: 1200px;
+$md-breakpoint: 900px;
+$sm-breakpoint: 600px;
+//Mixin para leer el tamaño de la pantalla
+
+@mixin media($screenSize) {
+  //Condicional para saber el tamaño de la pantalla
+  @if $screenSize==lg {
+    @media (max-width: $lg-breakpoint) {
+      @content;
+    }
+  } @else if $screenSize==md {
+    @media (max-width: $md-breakpoint) {
+      @content;
+    }
+  } @else if $screenSize==sm {
+    @media (max-width: $sm-breakpoint) {
+      @content;
+    }
+  }
+}
