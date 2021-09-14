@@ -1,53 +1,37 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
+
 //Styles
 import "./App.css";
 
-//COMPONENTS
-import SingleCharacter from "./components/SingleCharacter";
-
 const App = () => {
-  //Estado del componente
-  const [characters, setCharacters] = useState([]);
-  const [page, setPage] = useState(1);
+  const [background, setBackground] = useState("App");
 
-  //Consultamos la API
-  const handleFetchAPI = async () => {
-    try {
-      const response = await fetch(
-        `https://rickandmortyapi.com/api/character/?page=${page}`
-      );
-      // const result = await response.json();
-      const { results, info } = await response.json();
-      //Guardamos results en estado
-      setCharacters(results);
-      setCharacters([...characters, ...results]);
-    } catch (error) {
-      console.log(error);
+  const exampleRef = useRef();
+  const handleRef = () => {
+    console.log(exampleRef.current.offsetTop);
+    console.log(window.scrollY);
+  };
+
+  const handleScroll = () => {
+    if (window.scrollY > exampleRef.current.offsetTop) {
+      setBackground("App2");
+    } else {
+      setBackground("App");
     }
   };
 
-  const handleNewPage = () => {
-    setPage(page + 1);
-  };
-
   useEffect(() => {
-    handleFetchAPI();
-  }, [page]);
+    window.addEventListener("scroll", handleScroll);
+
+    // return () => {
+    //   cleanup;
+    // };
+  }, []);
 
   return (
-    <div className="App">
-      <section className="characters-container">
-        {characters.map(character => (
-          <SingleCharacter
-            name={character.name}
-            avatar={character.image}
-            key={character.id}
-          />
-        ))}
-        <button className="more-btn" onClick={handleNewPage}>
-          Ver más
-        </button>
-      </section>
+    <div className={background}>
+      <h1 ref={exampleRef}>Si funciona :D</h1>
+      <button onClick={handleRef}>Click</button>
     </div>
   );
 };

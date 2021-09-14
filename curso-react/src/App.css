@@ -1,18 +1,13 @@
-.characters-container {
+.App {
   background-color: #6f69ac;
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  height: 150vh;
 }
 
-.more-btn {
-  width: 100%;
-  border: none;
-  outline: none;
-  background-color: #95dac1;
-  color: #fff;
-  padding: 10px;
-  margin-top: 20px;
-  font-size: 2rem;
+.App2 {
+  background-color: #fcffa6;
+  height: 150vh;
+}
+
+.App h1 {
+  margin-top: 200px;
 }
