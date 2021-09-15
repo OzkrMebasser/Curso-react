@@ -1,38 +1,44 @@
-import React, { useRef, useEffect, useState } from "react";
+import React from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 //Styles
 import "./App.css";
 
+//Views
+import Home from "./views/Home";
+import LoginForm from "./views/LoginForm";
+import RegisterForm from "./views/RegisterForm";
+import Contact from "./views/Contact";
+
+//Layout
+import MainLayout from "./layouts/MainLayout";
+
 const App = () => {
-  const [background, setBackground] = useState("App");
-
-  const exampleRef = useRef();
-  const handleRef = () => {
-    console.log(exampleRef.current.offsetTop);
-    console.log(window.scrollY);
-  };
-
-  const handleScroll = () => {
-    if (window.scrollY > exampleRef.current.offsetTop) {
-      setBackground("App2");
-    } else {
-      setBackground("App");
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-
-    // return () => {
-    //   cleanup;
-    // };
-  }, []);
-
   return (
-    <div className={background}>
-      <h1 ref={exampleRef}>Si funciona :D</h1>
-      <button onClick={handleRef}>Click</button>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <MainLayout>
+          {/* Header */}
+          <Route path="/" exact>
+            <Home />
+          </Route>
+
+          <Route path="/login" exact>
+            <LoginForm />
+          </Route>
+
+          <Route path="/register" exact>
+            <RegisterForm />
+          </Route>
+
+          <Route path="/contact" exact>
+            <Contact />
+          </Route>
+
+          {/* Footer */}
+        </MainLayout>
+      </Switch>
+    </BrowserRouter>
   );
 };
 

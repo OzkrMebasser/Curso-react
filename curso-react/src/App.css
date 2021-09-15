@@ -1,13 +1,5 @@
-.App {
-  background-color: #6f69ac;
-  height: 150vh;
-}
-
-.App2 {
-  background-color: #fcffa6;
-  height: 150vh;
-}
-
-.App h1 {
-  margin-top: 200px;
+*,
+html {
+  margin: 0;
+  padding: 0;
 }
