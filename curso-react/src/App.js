@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 //Vistas o páginas
 import Home from "./views/Home";
-import SingleHero from "./views/SingleHero";
+import SinglePlanet from "./views/SinglePlanet";
 import NotFound from "./views/NotFound";
 
 const App = () => {
@@ -13,8 +13,8 @@ const App = () => {
         <Route path="/" exact>
           <Home />
         </Route>
-        <Route path="/hero/:id" exact>
-          <SingleHero />
+        <Route path="/homeworld/:id" exact>
+          <SinglePlanet />
         </Route>
         <Route path="*">
           <NotFound />

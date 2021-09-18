@@ -7,7 +7,7 @@ import "../styles/Header.styles.css";
 const Header = props => {
   return (
     <header>
-      <Link to="/">HeroAPI</Link>
+      <Link to="/">SWAPI</Link>
     </header>
   );
 };

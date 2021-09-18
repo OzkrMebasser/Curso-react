@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+import { Spinner } from "react-bootstrap";
 //Components
 import Header from "../components/Header";
 import SearchHero from "../components/Home/SearchHero";
@@ -7,53 +7,57 @@ import ShowError from "../components/ShowError";
 import Hero from "../components/Home/Hero";
 
 const Home = () => {
-  const [heroName, setHeroName] = useState(null);
-  const [heroData, setHeroData] = useState(null);
-  const [error, setError] = useState(false);
-  const [message, setMessage] = useState(null);
+  const [character, setCharacter] = useState(null);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleSearchHero = async e => {
-    const accesToken = "10220588968268520";
-    const url = `https://www.superheroapi.com/api.php/${accesToken}/search/${heroName}`;
-    e.preventDefault();
-
+  const handleRandomDataAPI = async () => {
     try {
-      const response = await fetch(url);
+      const API = "https://www.swapi.tech/api/people/?name=r2";
+      const response = await fetch(API);
       const result = await response.json();
 
-      if (result.response === "error") {
-        setError(true);
-        setMessage(result.error);
-      } else {
-        setError(false);
-        setHeroData(result.results[0]);
-      }
       console.log(result);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const fetchDataAPI = async e => {
+    e.preventDefault();
+    const API = `https://www.swapi.tech/api/people/?name=${character}`;
+    setLoading(true);
+    try {
+      const response = await fetch(API);
+      const { result } = await response.json();
+      setData(result[0]);
+      console.log(result[0]);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    handleRandomDataAPI();
+  }, []);
+
   return (
     <>
       <Header />
-      <SearchHero
-        setHeroName={setHeroName}
-        handleSearchHero={handleSearchHero}
-      />
-
-      {//Si la variable error es true
-      error ? (
-        <ShowError message={message} />
-      ) : (
-        heroData && (
-          <Hero
-            name={heroData.name}
-            avatar={heroData.image.url}
-            id={heroData.id}
-          />
-        )
-      )}
+      <SearchHero setCharacter={setCharacter} fetchDataAPI={fetchDataAPI} />
+      {data && !loading ? (
+        <Hero
+          name={data.properties.name}
+          description={data.description}
+          homeworld={data.properties.homeworld}
+        />
+      ) : data && loading ? (
+        <div style={{ textAlign: "center", marginTop: 10 }}>
+          <Spinner animation="grow" />
+        </div>
+      ) : null}
     </>
   );
 };

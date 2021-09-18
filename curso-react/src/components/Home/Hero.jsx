@@ -1,20 +1,39 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 //Styles
 import "../../styles/Home/Hero.styles.css";
 
-const Hero = ({ name, avatar, id }) => {
+const Hero = ({ name, description, homeworld }) => {
+  const [idPlanet, setIdPlanet] = useState(null);
+
+  useEffect(() => {
+    if (homeworld) {
+      const planet = homeworld.substr(homeworld.length - 1);
+      setIdPlanet(planet);
+    }
+    return () => {
+      setIdPlanet(null);
+    };
+  }, []);
+
   return (
-    <div className="hero-card">
-      <img src={avatar} alt={name} />
-      <div className="hero-card__actions">
-        <h2>{name}</h2>
-        <button>
-          <Link to={`/hero/${id}`}>Ver más</Link>
-        </button>
-      </div>
-    </div>
+    <Card style={{ width: "18rem", margin: "auto", marginTop: 10 }}>
+      <Card.Img
+        variant="top"
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Star_Wars_Logo.svg/1024px-Star_Wars_Logo.svg.png"
+      />
+      <Card.Body>
+        <Card.Title>{name}</Card.Title>
+        <Card.Text>{description}</Card.Text>
+        <Button variant={homeworld ? "danger" : "warning"}>
+          <Link to={homeworld ? `/homeworld/${idPlanet}` : "/"}>
+            {homeworld ? "See More" : "Go back"}
+          </Link>
+        </Button>
+      </Card.Body>
+    </Card>
   );
 };
 
