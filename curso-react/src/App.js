@@ -1,14 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 
 //COMPONENTS
-import Header from "./components/Header";
+
+import AddTodo from "./components/AddTodo";
+import TodoList from "./components/TodoList";
+import TodoItem from "./components/TodoItem";
+
+const list = [
+  {
+    title: "Estudiar JS",
+    status: true
+  },
+  {
+    title: "Preparar la comida",
+    status: false
+  }
+];
 
 const App = () => {
+  const [todoTitle, setTodoTitle] = useState(null);
+  const [todoArray, setTodoArray] = useState(list);
+
+  const handleAddTodo = () => {
+    console.log(todoTitle);
+    setTodoArray([...todoArray, { title: todoTitle, status: false }]);
+  };
+
   return (
-    <div className="App">
-      <Header titulo="Logo 1" numero="1" classCss="header1" />
-      <Header titulo="Logo 2" numero="2" classCss="header2" />
-      <Header titulo="Logo 3" numero="3" classCss="header3" />
+    <div className="h-screen bg-second_blue flex justify-center items-center">
+      <div className="bg-third_blue md:bg-main_blue w-full text-white px-10 py-10 rounded md:w-5/12 h-2/3	overflow-scroll	">
+        <h2 className="text-left text-3xl">TODO List</h2>
+        <AddTodo setTodoTitle={setTodoTitle} handleAddTodo={handleAddTodo} />
+
+        <TodoList>
+          {/* children */}
+          {todoArray.map((task, index) => (
+            <TodoItem title={task.title} status={task.status} key={index} />
+          ))}
+          {/* children */}
+        </TodoList>
+      </div>
     </div>
   );
 };
