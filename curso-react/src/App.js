@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 //COMPONENTS
 
@@ -19,12 +19,26 @@ const list = [
 
 const App = () => {
   const [todoTitle, setTodoTitle] = useState("");
-  const [todoArray, setTodoArray] = useState(list);
+  const [todoArray, setTodoArray] = useState([]);
 
   const handleAddTodo = () => {
     setTodoArray([...todoArray, { title: todoTitle, status: false }]);
     setTodoTitle("");
   };
+
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem("todoList"))) {
+      setTodoArray(JSON.parse(localStorage.getItem("todoList")));
+      console.log("Si existe");
+    } else {
+      setTodoArray(localStorage.setItem("todoList", JSON.stringify([])));
+      console.log("No existe");
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("todoList", JSON.stringify(todoArray));
+  }, [todoArray]);
 
   return (
     <div className="h-screen bg-second_blue flex justify-center items-center">
@@ -38,16 +52,17 @@ const App = () => {
 
         <TodoList>
           {/* children */}
-          {todoArray.map((task, index) => (
-            <TodoItem
-              title={task.title}
-              status={task.status}
-              setTodoArray={setTodoArray}
-              index={index}
-              todoArray={todoArray}
-              key={index}
-            />
-          ))}
+          {todoArray?.length > 0 &&
+            todoArray.map((task, index) => (
+              <TodoItem
+                title={task.title}
+                status={task.status}
+                setTodoArray={setTodoArray}
+                index={index}
+                todoArray={todoArray}
+                key={index}
+              />
+            ))}
           {/* children */}
         </TodoList>
       </div>

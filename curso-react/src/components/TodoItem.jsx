@@ -3,10 +3,12 @@ import React from "react";
 const TodoItem = ({ title, status, setTodoArray, index, todoArray }) => {
   const completeOrDeleteTodo = () => {
     if (status) {
-      console.log("Tarea terminada");
+      const deletedTodos = [...todoArray];
+      deletedTodos.splice(index, 1);
+      setTodoArray(deletedTodos);
     } else {
-      const updatedTodos = [...todoArray];
-      updatedTodos[index].status = true;
+      const updatedTodos = [...todoArray]; //<----- Array original
+      updatedTodos[index].status = true; //<----- El "mismo" array, pero con un valor actualizado
       setTodoArray(updatedTodos);
     }
   };
