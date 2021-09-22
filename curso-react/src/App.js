@@ -18,24 +18,35 @@ const list = [
 ];
 
 const App = () => {
-  const [todoTitle, setTodoTitle] = useState(null);
+  const [todoTitle, setTodoTitle] = useState("");
   const [todoArray, setTodoArray] = useState(list);
 
   const handleAddTodo = () => {
-    console.log(todoTitle);
     setTodoArray([...todoArray, { title: todoTitle, status: false }]);
+    setTodoTitle("");
   };
 
   return (
     <div className="h-screen bg-second_blue flex justify-center items-center">
       <div className="bg-third_blue md:bg-main_blue w-full text-white px-10 py-10 rounded md:w-5/12 h-2/3	overflow-scroll	">
         <h2 className="text-left text-3xl">TODO List</h2>
-        <AddTodo setTodoTitle={setTodoTitle} handleAddTodo={handleAddTodo} />
+        <AddTodo
+          todoTitle={todoTitle}
+          setTodoTitle={setTodoTitle}
+          handleAddTodo={handleAddTodo}
+        />
 
         <TodoList>
           {/* children */}
           {todoArray.map((task, index) => (
-            <TodoItem title={task.title} status={task.status} key={index} />
+            <TodoItem
+              title={task.title}
+              status={task.status}
+              setTodoArray={setTodoArray}
+              index={index}
+              todoArray={todoArray}
+              key={index}
+            />
           ))}
           {/* children */}
         </TodoList>
