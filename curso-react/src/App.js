@@ -1,35 +1,31 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-//VIEWS
-import Home from "./components/Home";
-import Contact from "./views/Contact";
+//Vistas
+import Home from "./views/Home";
+import Team from "./views/Team";
 
-////Styles
-import "./styles/styles.css";
-import "./styles/grid.css";
-import "./styles/reset.css";
+//Context
+import { PokemonListProvider } from "./context/PokemonListContext";
+import { TeamProvider } from "./context/TeamContext";
 
 const App = () => {
-  // return (
-  //   <div className="App">
-  //     <Header />
-  //     <AboutSection />
-  //     <ContactSection />
-  //   </div>
-  // );
-
   return (
-    <Router>
-      <Switch>
-        <Route path="/" exact>
-          <Home />
-        </Route>
-        <Route path="/contact">
-          <Contact />
-        </Route>
-      </Switch>
-    </Router>
+    <TeamProvider>
+      <PokemonListProvider>
+        <Router>
+          <Switch>
+            <Route path="/" exact>
+              <Home />
+            </Route>
+            <Route path="/team">
+              <Team />
+            </Route>
+          </Switch>
+        </Router>
+      </PokemonListProvider>
+    </TeamProvider>
   );
 };
 
