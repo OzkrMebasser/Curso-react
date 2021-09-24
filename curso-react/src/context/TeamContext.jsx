@@ -4,7 +4,7 @@ const TeamContext = createContext();
 
 const trainer = {
   name: "Daniel",
-  team: []
+  team: [1, 2, 3]
 };
 
 const TeamProvider = ({ children }) => {
@@ -19,8 +19,14 @@ const TeamProvider = ({ children }) => {
   };
 
   const handleRemoveTeam = id => {
-    // setUser({ ...user, team: [...user.team, id] });
-    alert(id);
+    console.log(user.team.length);
+    setUser({
+      ...user,
+      team:
+        user.team.length === 1
+          ? []
+          : user.team.filter(pokemon => pokemon !== id)
+    });
   };
 
   console.log(user);

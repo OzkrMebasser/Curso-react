@@ -1,10 +1,62 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
+//Components
+import Header from "../components/Header";
+import SinglePokemon from "../components/SinglePokemon";
+
+//Context
+import PokemonListContext from "../context/PokemonListContext";
+import TeamContext from "../context/TeamContext";
 
 const Team = () => {
+  const { list } = useContext(PokemonListContext);
+  const { user } = useContext(TeamContext);
+
+  const [myTeam, setMyTeam] = useState([]);
+
+  const styles = {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexWrap: "wrap",
+    width: "70%",
+    margin: "auto",
+    marginTop: 20
+  };
+
+  useEffect(() => {
+    let found = [];
+    user.team.forEach(element => {
+      found = [...found, list.find(pokemon => pokemon.id === element)];
+    });
+    setMyTeam(found);
+  }, [user.team]);
+
   return (
-    <div>
-      <h1>Si funciona</h1>
-    </div>
+    <>
+      <Header />
+      <div style={styles}>
+        {myTeam?.length > 0 &&
+          myTeam.map(pokemon => (
+            <SinglePokemon
+              key={pokemon.id}
+              img={pokemon.img}
+              name={pokemon.name}
+              id={pokemon.id}
+              team={true}
+            />
+          ))}
+      </div>
+      {!myTeam.length > 0 && (
+        <div style={{ textAlign: "center", marginTop: 20 }}>
+          <h2>Not pokemon found</h2>
+          <Button variant="success">
+            <Link to="/">Add pokemon</Link>
+          </Button>
+        </div>
+      )}
+    </>
   );
 };
 
