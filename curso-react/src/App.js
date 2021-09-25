@@ -1,26 +1,60 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Card, Button, Accordion } from "react-bootstrap";
 
-//Vistas
-import Home from "./views/Home";
-import Team from "./views/Team";
+//Images
 
-//Context
-import { PokemonListProvider } from "./context/PokemonListContext";
-import { TeamProvider } from "./context/TeamContext";
+import ProductImg from "./assets/product.jpg";
+
+const initialStateProducts = {
+  products: [
+    {
+      id: 1,
+      name: "producto 1",
+      price: 250,
+      description: "Descripción de prueba 1"
+    },
+    {
+      id: 2,
+      name: "producto 2",
+      price: 550,
+      description: "Descripción de prueba 2"
+    },
+    {
+      id: 3,
+      name: "producto 3",
+      price: 2500,
+      description: "Descripción de prueba 3"
+    },
+    {
+      id: 4,
+      name: "producto 4",
+      price: 120,
+      description: "Descripción de prueba 4"
+    }
+  ]
+};
 
 const initialState = {
   total: 0,
-  items: []
+  cart: []
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "add":
+    case "ADD":
       return {
-        total: state.total + parseInt(action.payload.price),
-        items: [...state.items, action.payload]
+        total: state.total + action.payload.payloadPrice,
+        cart: [...state.cart, action.payload]
+      };
+
+    case "REMOVE":
+      return {
+        total: state.total - action.payload.price,
+        cart: state.cart.filter(
+          productId => productId.payloadId !== action.payload.id
+        )
       };
 
     default:
@@ -30,79 +64,88 @@ const reducer = (state, action) => {
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const handleIncrement = () => {
-    dispatch({ type: "incrementCount", payload: 12 });
+  const [productsState, setProductsState] = useState(
+    initialStateProducts.products
+  );
+
+  const handleAddProduct = productInfo => {
+    dispatch({ type: "ADD", payload: productInfo });
   };
+
+  const handleRemoveProduct = productInfo => {
+    console.log(productInfo);
+    dispatch({ type: "REMOVE", payload: productInfo });
+  };
+
   return (
-    // <TeamProvider>
-    //   <PokemonListProvider>
-    //     <Router>
-    //       <Switch>
-    //         <Route path="/" exact>
-    //           <Home />
-    //         </Route>
-    //         <Route path="/team">
-    //           <Team />
-    //         </Route>
-    //       </Switch>
-    //     </Router>
-    //   </PokemonListProvider>
-    // </TeamProvider>
     <>
-      <p>Total :$ {state.total} </p>
-      <p>Total de productos: {state.items.length} </p>
+      <h2>Shirt store</h2>
+      <p>Total: {state.total}</p>
 
-      <h2>Shopping cart</h2>
-      {state.items.map(item => (
-        <div>
-          <p>{item.name}</p>
-          <p>${item.price}</p>
-        </div>
-      ))}
+      <Accordion defaultActiveKey="0">
+        <Accordion.Item eventKey="0">
+          <Accordion.Header>Products</Accordion.Header>
+          <Accordion.Body>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: 200
+              }}
+            >
+              {state.cart.map((productCart, index) => (
+                <Card style={{ width: "18rem" }}>
+                  <Card.Img variant="top" src={ProductImg} />
+                  <Card.Body>
+                    <Card.Title>{productCart.payloadName}</Card.Title>
+                    <Button
+                      variant="danger"
+                      onClick={() =>
+                        handleRemoveProduct({
+                          id: productCart.payloadId,
+                          price: productCart.payloadPrice
+                        })
+                      }
+                    >
+                      Remove
+                    </Button>
+                  </Card.Body>
+                </Card>
+              ))}
+            </div>
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
 
-      <div style={{ marginTop: 200 }}>
-        <p>Producto 1</p>
-        <p>$250</p>
-        <button
-          onClick={() =>
-            dispatch({
-              type: "add",
-              payload: { name: "Producto 1", price: "250" }
-            })
-          }
-        >
-          Add +
-        </button>
-      </div>
-
-      <div>
-        <p>Producto 2</p>
-        <p>$350</p>
-        <button
-          onClick={() =>
-            dispatch({
-              type: "add",
-              payload: { name: "Producto 2", price: "350" }
-            })
-          }
-        >
-          Add +
-        </button>
-      </div>
-
-      <div>
-        <p>Producto 3</p>
-        <p>$1250</p>
-        <button
-          onClick={() =>
-            dispatch({
-              type: "add",
-              payload: { name: "Producto 3", price: "1250" }
-            })
-          }
-        >
-          Add +
-        </button>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: 200
+        }}
+      >
+        {productsState.map(product => (
+          <Card style={{ width: "18rem" }}>
+            <Card.Img variant="top" src={ProductImg} />
+            <Card.Body>
+              <Card.Title>{product.name}</Card.Title>
+              <Card.Text>{product.description}</Card.Text>
+              <Button
+                variant="primary"
+                onClick={() =>
+                  handleAddProduct({
+                    payloadName: product.name,
+                    payloadPrice: product.price,
+                    payloadDesc: product.description,
+                    payloadId: product.id
+                  })
+                }
+              >
+                $ {product.price} +
+              </Button>
+            </Card.Body>
+          </Card>
+        ))}
       </div>
     </>
   );
