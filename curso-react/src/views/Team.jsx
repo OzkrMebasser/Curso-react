@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 //Components
@@ -7,13 +7,12 @@ import SinglePokemon from "../components/SinglePokemon";
 
 //Context
 import PokemonListContext from "../context/PokemonListContext";
-import TeamContext from "../context/TeamContext";
 
 const Team = () => {
-  const { list } = useContext(PokemonListContext);
-  const { user } = useContext(TeamContext);
-
   const [myTeam, setMyTeam] = useState([]);
+  const { list } = useContext(PokemonListContext);
+
+  console.log(list);
 
   const styles = {
     display: "flex",
@@ -25,18 +24,18 @@ const Team = () => {
     marginTop: 20
   };
 
-  useEffect(() => {
-    let found = [];
-    user.team.forEach(element => {
-      found = [...found, list.find(pokemon => pokemon.id === element)];
-    });
-    setMyTeam(found);
-  }, [user.team]);
+  // useEffect(() => {
+  //   let found = [];
+  //   user.team.forEach(element => {
+  //     found = [...found, list.find(pokemon => pokemon.id === element)];
+  //   });
+  //   setMyTeam(found);
+  // }, [user.team]);
 
   return (
     <>
       <Header />
-      <div style={styles}>
+      {/* <div style={styles}>
         {myTeam?.length > 0 &&
           myTeam.map(pokemon => (
             <SinglePokemon
@@ -55,7 +54,7 @@ const Team = () => {
             <Link to="/">Add pokemon</Link>
           </Button>
         </div>
-      )}
+      )} */}
     </>
   );
 };

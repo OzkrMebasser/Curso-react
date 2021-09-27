@@ -2,16 +2,11 @@ import React, { useContext } from "react";
 
 //Bootstrap components
 import { Navbar, Container, Nav } from "react-bootstrap";
-import PokemonListContext from "../context/PokemonListContext";
 
 //Router
 import { Link } from "react-router-dom";
 
 const Header = () => {
-  const { list } = useContext(PokemonListContext);
-
-  console.log("Desde el header :v");
-  console.log(list);
   return (
     <Navbar expand="lg" variant="danger" bg="danger">
       <Container>

@@ -1,8 +1,11 @@
 import React, { createContext, useState } from "react";
 import { pokemonList } from "../helpers/pokemonList";
-//Crear el contexto
+
+//Paso 1
 const PokemonListContext = createContext();
-//Provider
+
+// Paso 2
+
 const PokemonListProvider = ({ children }) => {
   const [list, setList] = useState(pokemonList);
 
@@ -14,6 +17,5 @@ const PokemonListProvider = ({ children }) => {
     </PokemonListContext.Provider>
   );
 };
-
 export { PokemonListProvider };
 export default PokemonListContext;
