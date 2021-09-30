@@ -21,7 +21,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         totalPrice: state.totalPrice - action.payload.price,
-        cart: state.cart.filter(product => product.id !== action.payload.id)
+        cart: state.cart.filter(product => product.id !== action.payload.id) //<-- cart: [{id: 1, name: ""}, ]
       };
 
     default:

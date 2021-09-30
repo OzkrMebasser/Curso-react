@@ -22,7 +22,7 @@ const Product = ({ name, description, price, id, img, status }) => {
   }, []);
 
   const handleDispatch = payload => {
-    dispatch({ type: status === "delete" ? "REMOVE" : "ADD", payload });
+    dispatch({ type: "ADD", payload });
   };
 
   return (
@@ -32,7 +32,7 @@ const Product = ({ name, description, price, id, img, status }) => {
         <Card.Title>{name}</Card.Title>
         <Card.Text>{description}</Card.Text>
         <Button
-          variant={status === "delete" ? "danger" : "primary"}
+          variant="primary"
           onClick={() => handleDispatch({ ...payload })}
         >
           $ {price} +
