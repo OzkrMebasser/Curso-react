@@ -38,10 +38,12 @@ const Header = ({ cart, total, session }) => {
             </span>
           </Navbar.Text>
 
-          {session.isOnSession ? (
-            <Navbar.Text>
-              <span className="header-link">Welcome {session.user}</span>
-            </Navbar.Text>
+          {session.user.jwt ? (
+            <Nav.Link>
+              <Link to="/account" className="header-link">
+                Welcome {session.user.user.username}
+              </Link>
+            </Nav.Link>
           ) : (
             <Nav.Link>
               <Link to="/login" className="header-link">

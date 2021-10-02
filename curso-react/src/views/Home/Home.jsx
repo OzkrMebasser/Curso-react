@@ -28,7 +28,7 @@ const Home = () => {
               description={product.desc}
               price={product.price}
               id={product.id}
-              img={product.img}
+              img={product.img[0]}
               status="add"
             />
           ))}

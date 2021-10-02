@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Formik } from "formik";
+import axios from "axios";
 
 //Context
 import UserContext from "../../context/UserContext";
@@ -35,29 +36,19 @@ const LoginForm = () => {
   };
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    if (auth.email === values.email && auth.password === values.password) {
-      dispatch({
-        type: "SUCCESS",
-        payload: { user: auth.user, email: auth.email }
+    try {
+      const response = await axios.post("http://localhost:1337/auth/local", {
+        identifier: values.email,
+        password: values.password
       });
-      history.push("/");
-    } else {
-      alert("Wrong credentials");
-    }
 
-    // try {
-    //   const response = await fetch(URL, {
-    //     method: "POST",
-    //     body: {
-    //       email: initialValues.email,
-    //       password: initialValues.password
-    //     }
-    //   });
-    //   const result = await response.json();
-    //   console.log(result)
-    // } catch (error) {
-    //     console.log(error)
-    // }
+      if (response.data) {
+        dispatch({ type: "SUCCESS", payload: response.data });
+        history.push("/");
+      }
+    } catch (error) {
+      alert("Identifier or password invalid.");
+    }
   };
 
   return (

@@ -13,6 +13,7 @@ import Main from "./layouts/Main";
 const Home = lazy(() => import("./views/Home/Home"));
 const ShopCart = lazy(() => import("./views/ShopCart/ShopCart"));
 const LoginForm = lazy(() => import("./views/Login/LoginForm"));
+const MyAccount = lazy(() => import("./views/MyAcount/MyAccount"));
 
 const App = () => {
   return (
@@ -38,6 +39,12 @@ const App = () => {
                   <Route path="/login">
                     <Suspense fallback={<LoaderPage />}>
                       <LoginForm />
+                    </Suspense>
+                  </Route>
+
+                  <Route path="/account">
+                    <Suspense fallback={<LoaderPage />}>
+                      <MyAccount />
                     </Suspense>
                   </Route>
 

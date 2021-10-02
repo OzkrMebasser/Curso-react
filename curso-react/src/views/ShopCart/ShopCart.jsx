@@ -13,7 +13,7 @@ import "./ShopCart.styles.css";
 
 const ShopCart = () => {
   const { state, dispatch } = useContext(ShopCartContext);
-
+  console.log(state);
   return (
     <>
       <TableCart>
@@ -23,9 +23,9 @@ const ShopCart = () => {
             <td>{product.name}</td>
             <td>
               <img
-                src={product.img}
+                src={`http://localhost:1337${product.img.url}`}
                 alt={product.name}
-                style={{ maxWidth: "20%" }}
+                style={{ maxWidth: "50%" }}
               />
             </td>
             <td>{product.description}</td>

@@ -3,18 +3,28 @@ import React, { createContext, useReducer } from "react";
 const UserContext = createContext();
 
 const initialState = {
-  user: "",
-  email: "",
-  isOnSession: false
+  user: {},
+  wishList: []
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "SUCCESS":
       return {
-        user: action.payload.user,
-        email: action.payload.email,
-        isOnSession: true
+        ...state,
+        user: action.payload
+      };
+
+    case "ADD_TO_WISH_LIST":
+      return {
+        ...state,
+        wishList: [...state.wishList, action.payload]
+      };
+
+    case "REMOVE_TO_WISH_LIST":
+      return {
+        ...state,
+        wishList: state.wishList.filter(user => user.id !== action.payload.id)
       };
 
     default:
@@ -26,7 +36,6 @@ const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const data = { state, dispatch };
-
   return <UserContext.Provider value={data}>{children}</UserContext.Provider>;
 };
 
