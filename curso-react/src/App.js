@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
+import ExampleContext from "./context/ExampleContext";
 
 //COMPONENTS
-import Header from "./components/Header";
+
+import Home from "./components/Home";
 
 const App = () => {
+  // const { counter, addCounter, removeCounter, resetCounter } = useContext(
+  //   ExampleContext
+  // );
+
+  const { state, dispatch } = useContext(ExampleContext);
   return (
     <div className="App">
-      <Header titulo="Logo 1" numero="1" classCss="header1" />
-      <Header titulo="Logo 2" numero="2" classCss="header2" />
-      <Header titulo="Logo 3" numero="3" classCss="header3" />
+      <h1>Count: {state.counter}</h1>
+
+      <button onClick={() => dispatch({ type: "ADD" })}>Add</button>
+      <button onClick={() => dispatch({ type: "REMOVE" })}>Remove</button>
+      <button onClick={() => dispatch({ type: "RESET" })}>Reset</button>
     </div>
   );
 };
