@@ -1,8 +1,13 @@
 import React from "react";
-
-const Header = ({ titulo, numero, classCss }) => {
+import Listado from "./Listado";
+const Header = ({ titulo, numero, classCss, isModal }) => {
+  //props <--- {titulo: "Logo 1", numero: "1", classCss: "header1", otraProp: "texto"}
+  //props.propiedad
   //   const { titulo, item } = props;
   //   console.log(props);
+  const handleClick = () => {
+    alert(" Si funciona");
+  };
   return (
     <header className={classCss}>
       <a href="#">{titulo}</a>
@@ -20,6 +25,8 @@ const Header = ({ titulo, numero, classCss }) => {
           <a href="#">Item {numero}</a>
         </li>
       </ul>
+      {isModal ? <button onClick={handleClick}>Click</button> : null}
+      <Listado />
     </header>
   );
 };
