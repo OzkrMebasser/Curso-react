@@ -10,8 +10,6 @@ const Form = () => {
 
   const handleSendInformation = e => {
     e.preventDefault();
-    console.log("Si funciona");
-    dispatch(fillUserInfo(data));
   };
 
   return (

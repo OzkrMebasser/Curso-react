@@ -3,5 +3,7 @@ export const types = {
   showModal: "SHOW_MODAL",
   hideModal: "HIDE_MODAL",
   //User types
-  userInfo: "USER_INFO"
+  userInfo: "USER_INFO",
+  //Pokemon
+  pokemonArea: "POKEMON_AREA"
 };
