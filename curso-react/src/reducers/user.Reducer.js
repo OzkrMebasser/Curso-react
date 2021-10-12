@@ -15,6 +15,9 @@ export const userReducer = (state = initialState, action) => {
         uid: action.payload.uid
       };
 
+    case types.logout:
+      return {};
+
     default:
       return state;
   }

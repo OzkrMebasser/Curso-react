@@ -1,13 +1,19 @@
 import { firebase, googleProvider } from "../firebase/firebase.config";
 import { types } from "../types/types";
+//Actions externas
+import { handleError } from "./error.actions";
 
 //GOOGLE
-
 export const loginWithGoogleFirebase = () => {
   return async dispatch => {
-    const { user } = await firebase.auth().signInWithPopup(googleProvider);
-    const { displayName, email, uid } = user;
-    dispatch(fillUserInfo({ displayName, email, uid }));
+    try {
+      const { user } = await firebase.auth().signInWithPopup(googleProvider);
+      const { displayName, email, uid } = user;
+      dispatch(fillUserInfo({ displayName, email, uid }));
+      dispatch(handleError({ status: false, message: "" }));
+    } catch (error) {
+      dispatch(handleError({ status: true, message: error.message }));
+    }
   };
 };
 
@@ -32,12 +38,15 @@ export const registerWithEmail = ({
         uid: user.uid
       })
     );
+    dispatch(handleError({ status: false, message: "" }));
   } catch (error) {
-    console.log(error);
+    dispatch(handleError({ status: true, message: error.message }));
   }
 };
 
 export const loginWithEmail = ({ email, password }) => async dispatch => {
+  dispatch(handleError({ status: false, message: "" }));
+
   try {
     const { user } = await firebase
       .auth()
@@ -51,7 +60,7 @@ export const loginWithEmail = ({ email, password }) => async dispatch => {
       })
     );
   } catch (error) {
-    console.log(error);
+    dispatch(handleError({ status: true, message: error.message }));
   }
 };
 
@@ -59,3 +68,12 @@ export const fillUserInfo = payload => ({
   type: types.userInfo,
   payload
 });
+
+export const logout = payload => async dispatch => {
+  await firebase.auth().signOut();
+  dispatch(
+    fillUserInfo({
+      type: types.logout
+    })
+  );
+};
