@@ -1,12 +1,12 @@
 import { types } from "../types/types";
 
-// const initialState = {
-//   displayName: "",
-//   email: "",
-//   uid: ""
-// };
+const initialState = {
+  displayName: "",
+  email: "",
+  uid: ""
+};
 
-export const userReducer = (state = {}, action) => {
+export const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.userInfo:
       return {

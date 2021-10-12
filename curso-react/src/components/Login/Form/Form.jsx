@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
 //MUI
@@ -11,10 +11,19 @@ import GoogleIcon from "@mui/icons-material/Google";
 import "./Form.styles.css";
 
 //Reux
-import { loginWithGoogleFirebase } from "../../../actions/user.actions";
+import {
+  loginWithGoogleFirebase,
+  loginWithEmail
+} from "../../../actions/user.actions";
 
 const Form = () => {
   const dispatch = useDispatch();
+
+  const [loginData, setLoginData] = useState({ email: "", password: "" });
+
+  const handleEmailLogin = () => {
+    dispatch(loginWithEmail(loginData));
+  };
 
   const handleGoogleLogin = () => {
     dispatch(loginWithGoogleFirebase());
@@ -36,15 +45,21 @@ const Form = () => {
         label="Email"
         variant="outlined"
         style={{ width: " 100%" }}
+        onChange={({ target }) =>
+          setLoginData({ ...loginData, email: target.value })
+        }
       />
       <TextField
         id="outlined-basic"
         label="Password"
         variant="outlined"
         style={{ width: " 100%" }}
+        onChange={({ target }) =>
+          setLoginData({ ...loginData, password: target.value })
+        }
       />
 
-      <Button variant="outlined" color="success">
+      <Button variant="outlined" color="success" onClick={handleEmailLogin}>
         Login
       </Button>
 

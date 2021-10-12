@@ -37,6 +37,24 @@ export const registerWithEmail = ({
   }
 };
 
+export const loginWithEmail = ({ email, password }) => async dispatch => {
+  try {
+    const { user } = await firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password);
+
+    dispatch(
+      fillUserInfo({
+        displayName: user.displayName,
+        email: user.email,
+        uid: user.uid
+      })
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const fillUserInfo = payload => ({
   type: types.userInfo,
   payload
