@@ -19,7 +19,7 @@ const AppRouter = () => {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
-      if (user && user.uid) {
+      if (user?.uid) {
         dispatch(
           fillUserInfo({
             displayName: user.displayName,
@@ -27,7 +27,6 @@ const AppRouter = () => {
             uid: user.uid
           })
         );
-
         setIsOnSession(true);
       } else {
         setIsOnSession(false);
@@ -40,10 +39,18 @@ const AppRouter = () => {
       <Route
         exact
         path="/"
-        render={isOnSession ? <Home /> : <Redirect to="/login" />}
+        render={() => (isOnSession ? <Home /> : <Redirect to="/login" />)}
       />
-      <Route exact path="/login" component={Login} />
-      <Route exact path="/register" component={Register} />
+      <Route
+        exact
+        path="/login"
+        render={() => (!isOnSession ? <Login /> : <Redirect to="/" />)}
+      />
+      <Route
+        exact
+        path="/register"
+        render={() => (!isOnSession ? <Register /> : <Redirect to="/" />)}
+      />
     </Switch>
   );
 };
